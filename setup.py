@@ -8,7 +8,7 @@ def read(fname):
         return f.read()
 
 setup(
-    name='django_ramos',
+    name='ramos',
     version='0.0.0',
     description=(
         'Generic Django backend pool '
@@ -20,7 +20,7 @@ setup(
     install_requires=[
         'Django>=1.8',
     ],
-    packages=['django_ramos'],
+    packages=['ramos'],
     classifiers=[
         'Framework :: Django',
         'Intended Audience :: Developers',

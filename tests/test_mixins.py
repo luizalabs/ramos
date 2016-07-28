@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django_ramos.mixins import SingletonCreateMixin, ThreadSafeCreateMixin
+from ramos.mixins import SingletonCreateMixin, ThreadSafeCreateMixin
 
 
 class SingletonDerived(SingletonCreateMixin):

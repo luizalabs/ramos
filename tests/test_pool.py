@@ -2,9 +2,9 @@
 import pytest
 from django.core.exceptions import ImproperlyConfigured
 
-from django_ramos.exceptions import InvalidBackendError
-from django_ramos.mixins import ThreadSafeCreateMixin
-from django_ramos.pool import BackendPool
+from ramos.exceptions import InvalidBackendError
+from ramos.mixins import ThreadSafeCreateMixin
+from ramos.pool import BackendPool
 
 
 class FakeABCBackend(ThreadSafeCreateMixin):
