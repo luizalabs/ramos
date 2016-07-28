@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name='ramos',
-    version='0.0.0',
+    version='0.0.1',
     description=(
         'Generic Django backend pool '
     ),
