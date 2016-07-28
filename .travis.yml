@@ -1,0 +1,21 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+install:
+  - pip install -r requirements-dev.txt
+
+before_install:
+  - pip install codecov
+
+after_success:
+  - codecov
+
+script:
+  - make check coverage
