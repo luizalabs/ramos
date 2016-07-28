@@ -15,6 +15,7 @@ setup(
     ),
     long_description=read('README.rst'),
     author='LuizaLabs',
+    author_email='pypi@luizalabs.com',
     url='https://github.com/luizalabs/ramos',
     keywords='django backends pool',
     install_requires=[
