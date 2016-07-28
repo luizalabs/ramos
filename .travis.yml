@@ -26,5 +26,5 @@ deploy:
     secure: T3/EBHRMQzn2qgKfqOYJR8TjiKYtc0xMNzbOQZpBGQMVv2fSJe0L3H7iaMPHV5v3ZERO1gvyQGD+on19NK+Jov897ASz4wr/2SqK2J4ZfjeBbffvUAdQ5yMcWMJs20BT00eLFDf9/18+KdJ47Us3zK50zvXFKDXK/6Hn8oEkMR8/qtKdfPgZs7kKh6SUH+LHpXBld8n3OqI4Axec37M5YJq6XSCfgFuagsfGdsLBxwA985Fibnn7j5/TD0T33J19iUrzI50fS9rX9/EFPVEca4iBCfvsqwB5XEHrkWkSN1Gfh97qN7Or1IcpZUat6KpJ676FYcAu8GXRtSNNBb29avwqXHQ2+pdu8f+fZJMyOvjVNY6nuISQNpy/apUfoNIH8mC56DxoVt6V5yem8CuwwReqnHL3vsp2DWGdGmLF3uMCSR5rCKx7VVMMRYQzwg+WxT+7LvwDA4cxvQt/oxEdInilsusiwbyZYvlizR16vpEhcle//QrSvqD7gfxAYS74AVLB2QZPojLeSH+CmR9YzGMKzjgYC/ElvyqAv4LcaOuoMsp+B0EkAQ6kOnDMfrkIhjdoCwcoOwimrSkFRhsvVTtfKWiRMzwW+9VLT+dcX9oXIkftY65S20+DGzDB3hwGgHv5ciLQLb0tHTwcc4cIkJxtcim9/3C4RrW7jchZ8sE=
   on:
     tags: true
-    distributions: sdist bdist_wheel
+    distributions: "sdist bdist_wheel"
     repo: luizalabs/ramos
