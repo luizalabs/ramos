@@ -18,7 +18,7 @@ test:  ## Run unit tests
 	@py.test -x tests/
 
 coverage: ## Run unit tests coverage
-	@py.test -x --cov django_ramos/ --cov-report=xml --cov-report=term-missing tests/
+	@py.test -x --cov ramos/ --cov-report=xml --cov-report=term-missing tests/
 
 check-python-import:
 	@isort --check
