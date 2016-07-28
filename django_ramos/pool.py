@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.module_loading import import_string
+
+from .exceptions import InvalidBackendError
+
+
+class BackendPool(object):
+    backend_type = None
+
+    @classmethod
+    def _get_backend_class(cls, backend_path):
+        backend_class = import_string(backend_path)
+
+        return backend_class
+
+    @classmethod
+    def get(cls, backend_id):
+        for backend_class in cls._get_backends_classes():
+            if backend_class.id == backend_id:
+                return backend_class.create()
+
+        raise InvalidBackendError(
+            cls.backend_type,
+            backend_id,
+            settings.POOL_OF_RAMOS[cls.backend_type]
+        )
+
+    @classmethod
+    def all(cls):
+        return [
+            backend_class.create()
+            for backend_class in cls._get_backends_classes()
+        ]
+
+    @classmethod
+    def _get_backends_classes(cls):
+        try:
+            backend_list = settings.POOL_OF_RAMOS[cls.backend_type]
+        except KeyError:
+            raise ImproperlyConfigured(
+                u'Backend type "{}" config not found'.format(cls.backend_type)
+            )
+
+        return [
+            cls._get_backend_class(backend_path)
+            for backend_path in backend_list
+        ]
