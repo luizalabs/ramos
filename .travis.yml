@@ -3,11 +3,19 @@ python:
   - '2.7'
   - '3.4'
   - '3.5'
+  - '3.6'
+
+env:
+  - DJANGO=true
+  - SIMPLE_SETTINGS=true
+
 cache:
   directories:
     - "$HOME/.cache/pip"
 
 install:
+  - if [ ${DJANGO} ]; then pip install Django>=1.8; fi
+  - if [ ${SIMPLE_SETTINGS} ]; then pip install simple_settings; fi
   - pip install -r requirements-dev.txt
 
 before_install:

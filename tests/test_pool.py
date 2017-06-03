@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from django.core.exceptions import ImproperlyConfigured
 
+from ramos.compat import ImproperlyConfigured, settings
 from ramos.exceptions import InvalidBackendError
 from ramos.mixins import ThreadSafeCreateMixin
 from ramos.pool import BackendPool
@@ -17,7 +17,7 @@ class FakeXYZBackend(ThreadSafeCreateMixin):
 
 class TestBackendPool(object):
 
-    def test_get_backends_should_return_all_backends_instances(self, settings):
+    def test_get_backends_should_return_all_backends_instances(self):
         settings.POOL_OF_RAMOS = {
             BackendPool.backend_type: (
                 u'{module}.{cls}'.format(
@@ -36,23 +36,20 @@ class TestBackendPool(object):
         assert isinstance(backends[0], FakeXYZBackend)
         assert isinstance(backends[1], FakeABCBackend)
 
-    def test_get_backends_without_config_should_raise(self, settings):
+    def test_get_backends_without_config_should_raise(self):
         settings.POOL_OF_RAMOS = {}
 
         with pytest.raises(ImproperlyConfigured):
             BackendPool.all()
 
-    def test_get_backends_with_zero_backends_should_return_empty_list(
-        self,
-        settings
-    ):
+    def test_get_backends_with_zero_backends_should_return_empty_list(self):
         settings.POOL_OF_RAMOS = {
             BackendPool.backend_type: {}
         }
 
         assert BackendPool.all() == []
 
-    def test_get_should_return_the_backend_instance(self, settings):
+    def test_get_should_return_the_backend_instance(self):
         settings.POOL_OF_RAMOS = {
             BackendPool.backend_type: (
                 u'{module}.{cls}'.format(
@@ -70,7 +67,7 @@ class TestBackendPool(object):
 
         assert isinstance(backend, FakeABCBackend)
 
-    def test_get_with_inexisting_backend_should_raise(self, settings):
+    def test_get_with_inexisting_backend_should_raise(self):
         settings.POOL_OF_RAMOS = {
             BackendPool.backend_type: (
                 u'{module}.{cls}'.format(
