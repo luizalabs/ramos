@@ -11,7 +11,7 @@ def read(fname):
 
 setup(
     name='ramos',
-    version='0.0.3',
+    version='1.0.0',
     description=(
         'Generic backend pool '
     ),
