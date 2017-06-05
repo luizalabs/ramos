@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 class InvalidBackendError(Exception):
     """
     InvalidBackendError is raised when instances of BackendPool
