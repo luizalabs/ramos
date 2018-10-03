@@ -25,3 +25,9 @@ check-python-import:
 
 fix-python-import:
 	@git diff origin/master --name-only | grep py | xargs isort -ri
+
+outdated: ## Show outdated dependencies
+	@pip list --outdated --format=columns
+
+install:  ## Install development dependencies
+	@pip install -r requirements-dev.txt
