@@ -19,6 +19,6 @@ def pytest_configure():
 
         django.setup()
     except ImportError:
-        from simple_settings.core import LazySettings
+        from simple_settings import LazySettings
         settings = LazySettings('conftest')
         settings.configure()
