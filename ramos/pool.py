@@ -29,7 +29,7 @@ class BackendPool(object):
     @classmethod
     def all(cls):
         """
-        Ruturn a list of instances of backend type
+        Return a list of instances of backend type
         """
 
         return [
