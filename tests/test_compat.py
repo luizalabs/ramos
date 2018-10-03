@@ -1,7 +1,22 @@
 # -*- coding: utf-8 -*-
 import pytest
+from mock import Mock, patch
 
-from ramos.compat import import_string
+from ramos.compat import configure, get_installed_pools, import_string
+
+try:
+    from importlib import reload
+except ImportError:
+    pass
+
+
+def assert_pools_is_equals_settings(pools, modules):
+    with patch.dict('sys.modules', modules):
+        from ramos import compat
+
+        reload(compat)
+
+        assert get_installed_pools() == pools
 
 
 class TestImportString(object):
@@ -21,3 +36,58 @@ class TestImportString(object):
         cls = import_string('ramos.compat.import_string')
 
         assert cls == import_string
+
+
+class TestConfiguration:
+
+    def test_should_configure_pools(self):
+        pools = {
+            'backend_a': [
+                'path.to.backend'
+            ],
+            'backend_b': [
+                'path.to.backend'
+            ]
+        }
+
+        configure(pools=pools)
+
+        assert get_installed_pools() == pools
+
+    def test_should_configure_pools_from_django_settings(self):
+        pools = {
+            'backend-from-django-settings': [
+                'path.to.backend'
+            ]
+        }
+
+        django = Mock()
+        django.conf.settings.POOL_OF_RAMOS = pools
+
+        assert_pools_is_equals_settings(
+            pools=pools,
+            modules={
+                'django': django,
+                'django.conf': django.conf,
+                'simple_settings': None
+            }
+        )
+
+    def test_should_configure_pools_from_simple_settings(self):
+        pools = {
+            'backend-from-simple-settings': [
+                'path.to.backend'
+            ]
+        }
+
+        simple_settings = Mock()
+        simple_settings.settings.POOL_OF_RAMOS = pools
+
+        assert_pools_is_equals_settings(
+            pools=pools,
+            modules={
+                'django': None,
+                'django.conf': None,
+                'simple_settings': simple_settings
+            }
+        )

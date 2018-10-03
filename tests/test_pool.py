@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from ramos.compat import ImproperlyConfigured, settings
+from ramos import configure
+from ramos.compat import ImproperlyConfigured
 from ramos.exceptions import InvalidBackendError
 from ramos.mixins import ThreadSafeCreateMixin
 from ramos.pool import BackendPool
@@ -18,7 +19,7 @@ class FakeXYZBackend(ThreadSafeCreateMixin):
 class TestBackendPool(object):
 
     def test_get_backends_should_return_all_backends_instances(self):
-        settings.POOL_OF_RAMOS = {
+        configure(pools={
             BackendPool.backend_type: (
                 u'{module}.{cls}'.format(
                     module=__name__,
@@ -29,7 +30,7 @@ class TestBackendPool(object):
                     cls=FakeABCBackend.__name__
                 ),
             )
-        }
+        })
 
         backends = BackendPool.all()
 
@@ -37,20 +38,20 @@ class TestBackendPool(object):
         assert isinstance(backends[1], FakeABCBackend)
 
     def test_get_backends_without_config_should_raise(self):
-        settings.POOL_OF_RAMOS = {}
+        configure(pools={})
 
         with pytest.raises(ImproperlyConfigured):
             BackendPool.all()
 
     def test_get_backends_with_zero_backends_should_return_empty_list(self):
-        settings.POOL_OF_RAMOS = {
+        configure(pools={
             BackendPool.backend_type: {}
-        }
+        })
 
         assert BackendPool.all() == []
 
     def test_get_should_return_the_backend_instance(self):
-        settings.POOL_OF_RAMOS = {
+        configure(pools={
             BackendPool.backend_type: (
                 u'{module}.{cls}'.format(
                     module=__name__,
@@ -61,14 +62,14 @@ class TestBackendPool(object):
                     cls=FakeABCBackend.__name__
                 ),
             )
-        }
+        })
 
         backend = BackendPool.get('fake_abc')
 
         assert isinstance(backend, FakeABCBackend)
 
-    def test_get_with_inexisting_backend_should_raise(self):
-        settings.POOL_OF_RAMOS = {
+    def test_get_with_nonexistent_backend_should_raise(self):
+        configure(pools={
             BackendPool.backend_type: (
                 u'{module}.{cls}'.format(
                     module=__name__,
@@ -79,7 +80,7 @@ class TestBackendPool(object):
                     cls=FakeABCBackend.__name__
                 ),
             )
-        }
+        })
 
         with pytest.raises(InvalidBackendError):
             BackendPool.get('fake_fake')

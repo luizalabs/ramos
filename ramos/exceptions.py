@@ -2,7 +2,7 @@
 class InvalidBackendError(Exception):
     """
     InvalidBackendError is raised when instances of BackendPool
-    can't get a backend implmentation
+    can't get a backend implementation
     """
 
     def __init__(self, backend_type, backend_id, available_backends):

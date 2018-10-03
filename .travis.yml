@@ -6,16 +6,17 @@ python:
   - '3.6'
 
 env:
-  - DJANGO=true
-  - SIMPLE_SETTINGS=true
+  - USE_DJANGO=true
+  - USE_SIMPLE_SETTINGS=true
+  - NO_THIRD_PARTY_LIBS=true
 
 cache:
   directories:
     - "$HOME/.cache/pip"
 
 install:
-  - if [ ${DJANGO} ]; then pip install Django>=1.8; fi
-  - if [ ${SIMPLE_SETTINGS} ]; then pip install simple_settings; fi
+  - if [ ${USE_DJANGO} ]; then pip install Django>=1.8; fi
+  - if [ ${USE_SIMPLE_SETTINGS} ]; then pip install simple_settings; fi
   - pip install -r requirements-dev.txt
 
 before_install:

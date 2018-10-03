@@ -1,7 +1,27 @@
+import threading
+
+_tls = threading.local()
+
+_tls.INSTALLED_POOLS = {}
+
+
+def configure(pools):
+    _tls.INSTALLED_POOLS = dict(pools)
+
+
+def get_installed_pools():
+    return _tls.INSTALLED_POOLS
+
+
 try:
-    from django.conf import settings  # noqa
+    from django.conf import settings
+    configure(pools=settings.POOL_OF_RAMOS)
 except ImportError:
-    from simple_settings import settings  # noqa
+    try:
+        from simple_settings import settings
+        configure(pools=settings.POOL_OF_RAMOS)
+    except ImportError:
+        pass
 
 
 try:

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from .compat import ImproperlyConfigured, import_string, settings
+
+from .compat import ImproperlyConfigured, get_installed_pools, import_string
 from .exceptions import InvalidBackendError
 
 
@@ -13,7 +14,7 @@ class BackendPool(object):
     @classmethod
     def get(cls, backend_id):
         """
-        Return an instace of backend type
+        Return an instance of backend type
         """
 
         for backend_class in cls._get_backends_classes():
@@ -23,7 +24,7 @@ class BackendPool(object):
         raise InvalidBackendError(
             cls.backend_type,
             backend_id,
-            settings.POOL_OF_RAMOS[cls.backend_type]
+            get_installed_pools()[cls.backend_type]
         )
 
     @classmethod
@@ -40,7 +41,7 @@ class BackendPool(object):
     @classmethod
     def _get_backends_classes(cls):
         try:
-            backend_list = settings.POOL_OF_RAMOS[cls.backend_type]
+            backend_list = get_installed_pools()[cls.backend_type]
         except KeyError:
             raise ImproperlyConfigured(
                 u'Backend type "{}" config not found'.format(cls.backend_type)
