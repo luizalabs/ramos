@@ -1,6 +1,6 @@
+-e .
 bumpversion==0.5.3
 flake8==3.5.0
 isort==4.3.4
 pytest-cov==2.6.0
 pytest==3.8.2
-simple-settings==0.13.0
