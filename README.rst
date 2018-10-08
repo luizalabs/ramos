@@ -18,6 +18,13 @@ Setup
 
     pip install ramos
 
+Development setup
+-----------------
+
+.. code:: bash
+
+    make install
+
 Requirements
 ------------
 
