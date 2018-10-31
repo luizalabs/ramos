@@ -1,3 +1,5 @@
+VERSION := 1.0.0
+
 .PHONY: help
 
 clean: ## Clean environment
@@ -33,19 +35,19 @@ install:  ## Install development dependencies
 	@pip install -r requirements-dev.txt
 
 release-draft: ## Show new release changelog
-	towncrier --draft
+	@towncrier --draft
 
 release-patch: ## Create patch release
-	bumpversion patch
-	towncrier --yes
-	git commit -am 'Update CHANGELOG' && git push && git push --tags
+	@bumpversion patch
+	@towncrier --yes
+	@git commit -am 'Bump version: $(VERSION) →  $(shell git describe --abbrev=0 --tags)'
 
 release-minor: ## Create minor release
-	bumpversion minor
-	towncrier --yes
-	git commit -am 'Update CHANGELOG' && git push && git push --tags
+	@bumpversion minor
+	@towncrier --yes
+	@git commit -am 'Bump version: $(VERSION) →  $(shell git describe --abbrev=0 --tags)'
 
 release-major: ## Create major release
-	bumpversion major
-	towncrier --yes
-	git commit -am 'Update CHANGELOG' && git push && git push --tags
+	@bumpversion major
+	@towncrier --yes
+	@git commit -am 'Bump version: $(VERSION) →  $(shell git describe --abbrev=0 --tags)'
