@@ -18,6 +18,7 @@ Setup
 
     pip install ramos
 
+
 Development setup
 -----------------
 
@@ -25,17 +26,27 @@ Development setup
 
     make install
 
-Requirements
-------------
-
-Ramos uses `Django`_ or `Simple Settings`_ to get backends
-configurations.
 
 Usage
 -----
 
-Settings
-~~~~~~~~
+.. code:: python
+
+    import ramos
+
+    ramos.configure(pools={
+        'backend_type': [
+            'path.to.backend_a',
+            'path.to.backend_b',
+        ]
+    })
+
+
+Integrations
+~~~~~~~~~~~~
+
+Ramos can uses `Django`_ or `Simple Settings`_ to get backends
+configurations if set settings.POOL_OF_RAMOS:
 
 .. code:: python
 
@@ -45,6 +56,7 @@ Settings
             'path.to.backend_b',
         ]
     }
+
 
 Backend Implementations
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,6 +76,7 @@ Backend Implementations
         id = 'backend_b'
         def say(self):
             return 'B'
+
 
 Backend Pool
 ~~~~~~~~~~~~
