@@ -16,6 +16,14 @@ class FakeXYZBackend(ThreadSafeCreateMixin):
     id = 'fake_xyz'
 
 
+class FakeBackendWithInit(ThreadSafeCreateMixin):
+    id = 'fake_with_init'
+
+    def __init__(self, foo, bar):
+        self.foo = foo
+        self.bar = bar
+
+
 class TestBackendPool(object):
 
     def test_get_backends_should_return_all_backends_instances(self):
@@ -29,6 +37,10 @@ class TestBackendPool(object):
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeBackendWithInit.__name__
+                ),
             )
         })
 
@@ -36,6 +48,7 @@ class TestBackendPool(object):
 
         assert isinstance(backends[0], FakeXYZBackend)
         assert isinstance(backends[1], FakeABCBackend)
+        assert isinstance(backends[2], FakeBackendWithInit)
 
     def test_get_backends_without_config_should_raise(self):
         configure(pools={})
@@ -67,6 +80,26 @@ class TestBackendPool(object):
         backend = BackendPool.get('fake_abc')
 
         assert isinstance(backend, FakeABCBackend)
+
+    def test_get_with_parameters_should_return_the_backend_instance(self):
+        configure(pools={
+            BackendPool.backend_type: (
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeXYZBackend.__name__
+                ),
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeBackendWithInit.__name__
+                ),
+            )
+        })
+
+        backend = BackendPool.get('fake_with_init', 'abc', 'def')
+
+        assert isinstance(backend, FakeBackendWithInit)
+        assert backend.foo == 'abc'
+        assert backend.bar == 'def'
 
     def test_get_with_nonexistent_backend_should_raise(self):
         configure(pools={
