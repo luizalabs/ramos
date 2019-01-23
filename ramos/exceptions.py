@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-class InvalidBackendError(Exception):
+
+
+class BaseRamosError(Exception):
+    pass
+
+
+class InvalidBackendError(BaseRamosError):
     """
     InvalidBackendError is raised when instances of BackendPool
     can't get a backend implementation
@@ -19,3 +25,7 @@ class InvalidBackendError(Exception):
             self.error_message,
             self.available_backends,
         )
+
+
+class MisconfiguredBackendError(BaseRamosError):
+    pass
