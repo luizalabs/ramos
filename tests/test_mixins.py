@@ -10,6 +10,12 @@ class AnotherSingletonDerived(SingletonCreateMixin):
     pass
 
 
+class BackendWithInit(ThreadSafeCreateMixin):
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+
 class TestSingletonCreateMixin(object):
 
     def setup(self):
@@ -50,3 +56,9 @@ class TestThreadSafeCreateMixin(object):
         assert instance_1
         assert instance_2
         assert instance_1 is not instance_2
+
+    def test_create_with_parameters_should_forward_arguments(self):
+        instance = BackendWithInit.create(a=2, b=3)
+
+        assert instance.a == 2
+        assert instance.b == 3
