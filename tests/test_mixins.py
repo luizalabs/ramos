@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import pytest
+
+from ramos.exceptions import MisconfiguredBackendError
 from ramos.mixins import SingletonCreateMixin, ThreadSafeCreateMixin
 
 
@@ -46,6 +49,16 @@ class TestSingletonCreateMixin(object):
             AnotherSingletonDerived.create() is not SingletonDerived.create()
         )
 
+    def test_create_singleton_with_custom_parameters_should_raise_error(self):
+        with pytest.raises(MisconfiguredBackendError):
+            SingletonDerived.create(1)
+
+        with pytest.raises(MisconfiguredBackendError):
+            SingletonDerived.create(a=2)
+
+        with pytest.raises(MisconfiguredBackendError):
+            SingletonDerived.create(3, b=4)
+
 
 class TestThreadSafeCreateMixin(object):
 
@@ -57,7 +70,7 @@ class TestThreadSafeCreateMixin(object):
         assert instance_2
         assert instance_1 is not instance_2
 
-    def test_create_with_parameters_should_forward_arguments(self):
+    def test_create_with_parameters_forwards_arguments(self):
         instance = BackendWithInit.create(a=2, b=3)
 
         assert instance.a == 2

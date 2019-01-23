@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from .exceptions import MisconfiguredBackendError
+
 
 class ThreadSafeCreateMixin(object):
     """
@@ -24,10 +26,15 @@ class SingletonCreateMixin(object):
     _instances = {}
 
     @classmethod
-    def create(cls):
+    def create(cls, *args, **kwargs):
         """
         Return always the same instance of the backend class
         """
+        if args or kwargs:
+            raise MisconfiguredBackendError(
+                "Singletons can't be initialized with extra arguments"
+            )
+
         if cls not in cls._instances:
             cls._instances[cls] = cls()
 
