@@ -12,7 +12,7 @@ def configure(pools):
 def get_installed_pools():
     return _tls.INSTALLED_POOLS
 
-
+settings = None  # noqa
 try:
     from django.conf import settings
     configure(pools=settings.POOL_OF_RAMOS)
