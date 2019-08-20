@@ -1,5 +1,5 @@
-Mixins
-======
+Backend Mixins
+==============
 
 As every backend needs a way to create itself, the `ramos.mixins` module
 provides mixin classes for this task which might be repetitive otherwise.
@@ -40,3 +40,22 @@ ThreadSafeCreateMixin
 
 The inherited class will return a new instance of itself in every call of
 `create`.
+
+Pool Mixins
+===========
+
+DefaultBackendMixin
+-------------------
+
+The inherited class will have the option to return a default backend based on
+the `SETTINGS_KEY` value that will exist in your `settings`.
+
+```python
+from ramos.pool import BackendPool
+
+class MyBackendPool(DefaultBackendMixin, BackendPool):
+    SETTINGS_KEY = 'DEFAULT_BACKEND_ID'
+
+backend = MyBackendPool.get_default()
+assert backend.id == 'DEFAULT_BACKEND_ID'
+```

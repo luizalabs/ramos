@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-from ramos.mixins import SingletonCreateMixin, ThreadSafeCreateMixin
+import pytest
+from mock import Mock, patch
+
+from ramos.mixins import (
+    DefaultBackendMixin,
+    SingletonCreateMixin,
+    ThreadSafeCreateMixin
+)
 
 
 class SingletonDerived(SingletonCreateMixin):
@@ -50,3 +57,48 @@ class TestThreadSafeCreateMixin(object):
         assert instance_1
         assert instance_2
         assert instance_1 is not instance_2
+
+
+class TestDefaultBackendMixin(object):
+
+    @pytest.fixture
+    def backend_id(self):
+        return 'my-backend-id'
+
+    @pytest.fixture
+    def mocked_settings(self, backend_id):
+        with patch('ramos.mixins.settings') as mocked_settings:
+            settings_obj = Mock()
+            settings_obj.DEFAULT_BACKEND_ID = backend_id
+
+            mocked_settings.return_value = settings_obj
+
+            yield mocked_settings
+
+    def test_should_raise_attribute_error_if_settings_key_is_none(self):
+        with pytest.raises(AttributeError):
+            DefaultBackendMixin.get_default()
+
+    def test_should_raise_attribute_error_if_key_not_found_on_settings(self):
+        invalid_key = 'four-o-four'
+        mixin_class = DefaultBackendMixin
+        mixin_class.SETTINGS_KEY = invalid_key
+
+        with pytest.raises(AttributeError) as exc:
+            mixin_class.get_default()
+
+        assert invalid_key in str(exc)
+
+    def test_should_call_get_with_correct_backend_id(
+        self,
+        mocked_settings,
+        backend_id
+    ):
+        mixin_class = DefaultBackendMixin
+        mixin_class.SETTINGS_KEY = backend_id
+        mixin_class.get = None
+
+        with patch.object(mixin_class, 'get') as mocked_class:
+            mixin_class.get_default()
+
+        assert mocked_class.get.called_with('backend_id')
