@@ -20,7 +20,10 @@ def reset_pools():
 @pytest.fixture(autouse=True)
 def reset_settings():
     if _SETTINGS:
-        _SETTINGS.POOL_OF_RAMOS = POOL_OF_RAMOS
+        try:
+            _SETTINGS.configure(POOL_OF_RAMOS=POOL_OF_RAMOS)
+        except RuntimeError:
+            _SETTINGS.POOL_OF_RAMOS = POOL_OF_RAMOS
 
 
 @pytest.fixture
