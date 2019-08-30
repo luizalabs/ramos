@@ -8,7 +8,7 @@ Ramos
     :target: https://codecov.io/gh/luizalabs/ramos
 
 
-Generic backend pool for Django
+Generic backend pool
 
 
 Setup
