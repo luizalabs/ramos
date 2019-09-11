@@ -8,6 +8,8 @@ Usage
 -----
 
 ```python
+from ramos.mixins import SingletonCreateMixin
+
 class BaseBackend:
 
     def do_something(self):
@@ -51,6 +53,7 @@ The inherited class will have the option to return a default backend based on
 the `SETTINGS_KEY` value that will exist in your `settings`.
 
 ```python
+from ramos.mixins import DefaultBackendMixin
 from ramos.pool import BackendPool
 
 class MyBackendPool(DefaultBackendMixin, BackendPool):
