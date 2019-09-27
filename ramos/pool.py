@@ -12,14 +12,14 @@ class BackendPool(object):
     backend_type = None
 
     @classmethod
-    def get(cls, backend_id):
+    def get(cls, backend_id, *args, **kwargs):
         """
         Return an instance of backend type
         """
 
         for backend_class in cls._get_backends_classes():
             if backend_class.id == backend_id:
-                return backend_class.create()
+                return backend_class.create(*args, **kwargs)
 
         raise InvalidBackendError(
             cls.backend_type,
@@ -28,13 +28,13 @@ class BackendPool(object):
         )
 
     @classmethod
-    def all(cls):
+    def all(cls, *args, **kwargs):
         """
         Return a list of instances of backend type
         """
 
         return [
-            backend_class.create()
+            backend_class.create(*args, **kwargs)
             for backend_class in cls._get_backends_classes()
         ]
 
@@ -54,6 +54,4 @@ class BackendPool(object):
 
     @classmethod
     def _get_backend_class(cls, backend_path):
-        backend_class = import_string(backend_path)
-
-        return backend_class
+        return import_string(backend_path)

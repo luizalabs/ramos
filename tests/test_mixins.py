@@ -5,7 +5,8 @@ from mock import Mock, patch
 from ramos.mixins import (
     DefaultBackendMixin,
     SingletonCreateMixin,
-    ThreadSafeCreateMixin
+    ThreadSafeCreateMixin,
+    ThreadSafeWithArgsCreateMixin
 )
 
 
@@ -57,6 +58,22 @@ class TestThreadSafeCreateMixin(object):
         assert instance_1
         assert instance_2
         assert instance_1 is not instance_2
+
+
+class TestThreadSafeWithArgsCreateMixin(object):
+
+    def test_create_should_pass_args_to_create_a_new_instance(self):
+        class Fake(ThreadSafeWithArgsCreateMixin):
+            def __init__(self, arg1, arg2, arg3):
+                self.arg1 = arg1
+                self.arg2 = arg2
+                self.arg3 = arg3
+
+        instance = Fake.create(1, 2, arg3=3)
+
+        assert instance.arg1 == 1
+        assert instance.arg2 == 2
+        assert instance.arg3 == 3
 
 
 class TestDefaultBackendMixin(object):

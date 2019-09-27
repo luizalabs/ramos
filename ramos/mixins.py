@@ -17,6 +17,21 @@ class ThreadSafeCreateMixin(object):
         return cls()
 
 
+class ThreadSafeWithArgsCreateMixin(object):
+    """
+    ThreadSafeWithArgsCreateMixin can be used as
+    an inheritance of thread safe backend
+    implementations with constructor args
+    """
+
+    @classmethod
+    def create(cls, *args, **kwargs):
+        """
+        Return always a new instance of the backend class
+        """
+        return cls(*args, **kwargs)
+
+
 class SingletonCreateMixin(object):
     """
     SingletonCreateMixin can be used as an inheritance

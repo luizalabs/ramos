@@ -43,6 +43,12 @@ ThreadSafeCreateMixin
 The inherited class will return a new instance of itself in every call of
 `create`.
 
+ThreadSafeWithArgsCreateMixin
+-----------------------------
+
+The inherited class will return a new instance of itself in every call of
+`create` but with this mixin you can pass args and kwargs do initialize the instance.
+
 Pool Mixins
 ===========
 
