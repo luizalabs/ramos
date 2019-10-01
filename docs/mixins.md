@@ -43,6 +43,11 @@ ThreadSafeCreateMixin
 The inherited class will return a new instance of itself in every call of
 `create`.
 
+**caveat**: When `ThreadSafeCreateMixin` is used with args and kwargs,
+every backend of the same type should use it as well, so that the backend pool
+can create every backend instance using the exact same parameters.
+
+
 Pool Mixins
 ===========
 
