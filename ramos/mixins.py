@@ -10,11 +10,11 @@ class ThreadSafeCreateMixin(object):
     """
 
     @classmethod
-    def create(cls):
+    def create(cls, *args, **kwargs):
         """
         Return always a new instance of the backend class
         """
-        return cls()
+        return cls(*args, **kwargs)
 
 
 class SingletonCreateMixin(object):
