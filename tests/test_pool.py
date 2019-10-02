@@ -45,6 +45,23 @@ class TestBackendPool(object):
         assert issubclass(backends[0], FakeXYZBackend)
         assert issubclass(backends[1], FakeABCBackend)
 
+    def test_get_backend_should_return_a_backend_class(self):
+        configure(pools={
+            BackendPool.backend_type: (
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeXYZBackend.__name__
+                ),
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeABCBackend.__name__
+                ),
+            )
+        })
+
+        backend = BackendPool.get_class('fake_abc')
+        assert issubclass(backend, FakeABCBackend)
+
     def test_get_backends_should_return_all_backends_instances(self):
         configure(pools={
             BackendPool.backend_type: (
