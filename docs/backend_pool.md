@@ -21,3 +21,9 @@ Returns returns an instance of the backend which has the given `backend_id`
 
 Returns a list of instances of all backends configured with the pool's backend
 type
+
+
+### `all_classes`
+
+Returns a list of class of all backends configured with the pool's backend
+type
