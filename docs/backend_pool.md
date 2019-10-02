@@ -23,6 +23,14 @@ Returns a list of instances of all backends configured with the pool's backend
 type
 
 
+### `get_class`
+
+Returns returns the class of the backend which has the given `backend_id`
+
+#### arguments
+
+`backend_id` - The `id` of the backend you are looking for
+
 ### `all_classes`
 
 Returns a list of class of all backends configured with the pool's backend
