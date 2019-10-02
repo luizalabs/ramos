@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+try:
+    from collections.abc import Iterator
+except ImportError:
+    from collections import Iterator
+
 import pytest
 
 from ramos import configure
@@ -61,6 +66,56 @@ class TestBackendPool(object):
 
         backend = BackendPool.get_class('fake_abc')
         assert issubclass(backend, FakeABCBackend)
+
+    def test_iterator_should_return_an_interator_with_all_backends_instances(
+        self
+    ):
+        configure(pools={
+            BackendPool.backend_type: (
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeXYZBackend.__name__
+                ),
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeABCBackend.__name__
+                ),
+            )
+        })
+
+        backends = BackendPool.iterator()
+        assert isinstance(backends, Iterator)
+
+        backend_0 = next(backends)
+        backend_1 = next(backends)
+
+        assert isinstance(backend_0, FakeXYZBackend)
+        assert isinstance(backend_1, FakeABCBackend)
+
+    def test_classes_iterator_should_return_an_interator_with_all_backends_classes(  # noqa
+        self
+    ):
+        configure(pools={
+            BackendPool.backend_type: (
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeXYZBackend.__name__
+                ),
+                u'{module}.{cls}'.format(
+                    module=__name__,
+                    cls=FakeABCBackend.__name__
+                ),
+            )
+        })
+
+        backends = BackendPool.classes_iterator()
+        assert isinstance(backends, Iterator)
+
+        backend_0 = next(backends)
+        backend_1 = next(backends)
+
+        assert issubclass(backend_0, FakeXYZBackend)
+        assert issubclass(backend_1, FakeABCBackend)
 
     def test_get_backends_should_return_all_backends_instances(self):
         configure(pools={

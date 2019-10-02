@@ -35,3 +35,13 @@ Returns returns the class of the backend which has the given `backend_id`
 
 Returns a list of class of all backends configured with the pool's backend
 type
+
+### `iterator`
+
+Returns an iterator of instances of all backends configured with the
+pool's backend type
+
+### `classes_iterator`
+
+Returns an interator of class of all backends configured with the
+pool's backend type

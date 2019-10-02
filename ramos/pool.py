@@ -24,17 +24,14 @@ class BackendPool(object):
         """
         Return a list of instances of backend type
         """
-        return [
-            backend_class.create(*args, **kwargs)
-            for backend_class in cls.all_classes()
-        ]
+        return list(cls.iterator(*args, **kwargs))
 
     @classmethod
     def get_class(cls, backend_id):
         """
         Return a class of backend type
         """
-        for backend_class in cls.all_classes():
+        for backend_class in cls.classes_iterator():
             if backend_class.id == backend_id:
                 return backend_class
 
@@ -49,6 +46,23 @@ class BackendPool(object):
         """
         Return a list of class of backend type
         """
+        return list(cls.classes_iterator())
+
+    @classmethod
+    def iterator(cls, *args, **kwargs):
+        """
+        Return an iterator of instances of backend type
+        """
+        return (
+            backend_class.create(*args, **kwargs)
+            for backend_class in cls.classes_iterator()
+        )
+
+    @classmethod
+    def classes_iterator(cls):
+        """
+        Return an iterator with all classed of backend type
+        """
         try:
             backend_list = get_installed_pools()[cls.backend_type]
         except KeyError:
@@ -56,7 +70,7 @@ class BackendPool(object):
                 u'Backend type "{}" config not found'.format(cls.backend_type)
             )
 
-        return [
+        return (
             import_string(backend_path)
             for backend_path in backend_list
-        ]
+        )
