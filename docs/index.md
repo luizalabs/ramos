@@ -11,11 +11,11 @@ What is a backend?
 _Plugable Backend_ (or _backend_ for short) is a term [borrowed from Django](http://charlesleifer.com/blog/django-patterns-pluggable-backends/).
 It is a standard interface to a resource, so that it can be _plugged_ at the
 developer's will. In order to instantiate a backend, **Ramos** requires the
-class to have a _classmethod_ `create`, which can't accept any parameter and
-must return your backend's instance. **Ramos** does not verify if the classes
-configured in a backend type really have a common interface, it is up to you
-(but you can use [Abstract Base Classes](https://docs.python.org/3/library/abc.html)
-for that).
+class to have a _classmethod_ `create`, which usually does not accept any parameter
+([but it can, if you need](mixins.md#ThreadSafeCreateMixin)) and must return
+your backend's instance. **Ramos** does not verify if the classes configured
+in a backend type really have a common interface, it is up to you
+([Abstract Base Classes](https://docs.python.org/3/library/abc.html) can help).
 
 
 Installation
