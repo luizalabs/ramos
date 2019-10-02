@@ -17,7 +17,7 @@ class BackendPool(object):
         Return an instance of backend type
         """
 
-        for backend_class in cls._get_backends_classes():
+        for backend_class in cls.all_classes():
             if backend_class.id == backend_id:
                 return backend_class.create(*args, **kwargs)
 
@@ -35,11 +35,11 @@ class BackendPool(object):
 
         return [
             backend_class.create(*args, **kwargs)
-            for backend_class in cls._get_backends_classes()
+            for backend_class in cls.all_classes()
         ]
 
     @classmethod
-    def _get_backends_classes(cls):
+    def all_classes(cls):
         try:
             backend_list = get_installed_pools()[cls.backend_type]
         except KeyError:
