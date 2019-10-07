@@ -38,3 +38,4 @@ deploy:
   on:
     tags: true
     repo: luizalabs/ramos
+skip_existing: true
