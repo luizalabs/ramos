@@ -100,7 +100,7 @@ class TestDefaultBackendMixin(object):
         with pytest.raises(AttributeError) as exc:
             mixin_class.get_default()
 
-        assert invalid_key in str(exc)
+        assert invalid_key in str(exc.value)
 
     def test_should_call_get_with_correct_backend_id(
         self,
