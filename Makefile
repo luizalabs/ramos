@@ -1,5 +1,3 @@
-VERSION := 1.0.0
-
 .PHONY: help
 
 clean: ## Clean environment
@@ -38,16 +36,16 @@ release-draft: ## Show new release changelog
 	@towncrier --draft
 
 release-patch: ## Create patch release
+	@bumpversion patch --dry-run --no-tag --no-commit --list | grep new_version= | sed -e 's/new_version=//' | xargs -n 1 towncrier --yes --version
+	@git commit -am 'Update CHANGELOG'
 	@bumpversion patch
-	@towncrier --yes
-	@git commit -am 'Bump version: $(VERSION) →  $(shell git describe --abbrev=0 --tags)'
 
 release-minor: ## Create minor release
+	@bumpversion minor --dry-run --no-tag --no-commit --list | grep new_version= | sed -e 's/new_version=//' | xargs -n 1 towncrier --yes --version
+	@git commit -am 'Update CHANGELOG'
 	@bumpversion minor
-	@towncrier --yes
-	@git commit -am 'Bump version: $(VERSION) →  $(shell git describe --abbrev=0 --tags)'
 
 release-major: ## Create major release
+	@bumpversion major --dry-run --no-tag --no-commit --list | grep new_version= | sed -e 's/new_version=//' | xargs -n 1 towncrier --yes --version
+	@git commit -am 'Update CHANGELOG'
 	@bumpversion major
-	@towncrier --yes
-	@git commit -am 'Bump version: $(VERSION) →  $(shell git describe --abbrev=0 --tags)'
