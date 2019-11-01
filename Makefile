@@ -31,3 +31,21 @@ outdated: ## Show outdated dependencies
 
 install:  ## Install development dependencies
 	@pip install -r requirements-dev.txt
+
+release-draft: ## Show new release changelog
+	@towncrier --draft
+
+release-patch: ## Create patch release
+	@bumpversion patch --dry-run --no-tag --no-commit --list | grep new_version= | sed -e 's/new_version=//' | xargs -n 1 towncrier --yes --version
+	@git commit -am 'Update CHANGELOG'
+	@bumpversion patch
+
+release-minor: ## Create minor release
+	@bumpversion minor --dry-run --no-tag --no-commit --list | grep new_version= | sed -e 's/new_version=//' | xargs -n 1 towncrier --yes --version
+	@git commit -am 'Update CHANGELOG'
+	@bumpversion minor
+
+release-major: ## Create major release
+	@bumpversion major --dry-run --no-tag --no-commit --list | grep new_version= | sed -e 's/new_version=//' | xargs -n 1 towncrier --yes --version
+	@git commit -am 'Update CHANGELOG'
+	@bumpversion major
