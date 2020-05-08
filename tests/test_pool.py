@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 try:
     from collections.abc import Iterator
 except ImportError:

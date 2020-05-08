@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pytest
 
 POOL_OF_RAMOS = {

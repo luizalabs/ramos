@@ -1,18 +1,18 @@
+from contextlib import suppress
+
 import pytest
 
 from ramos.compat import get_installed_pools
 
-skip_django = False
-try:
+skip_django = True
+with suppress(ImportError):
     import django  # noqa
-except ImportError:
-    skip_django = True
+    skip_django = False
 
-skip_simple_settings = False
-try:
+skip_simple_settings = True
+with suppress(ImportError):
     from simple_settings.utils import settings_stub
-except ImportError:
-    skip_simple_settings = True
+    skip_simple_settings = False
 
 
 @pytest.mark.skipif(skip_django, reason='The django is not installed')

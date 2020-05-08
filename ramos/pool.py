@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from .compat import ImproperlyConfigured, get_installed_pools, import_string
 from .exceptions import InvalidBackendError
 

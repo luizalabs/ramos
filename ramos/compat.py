@@ -1,14 +1,14 @@
 import threading
+from contextlib import suppress
 
-settings = None  # noqa
+settings = threading.local()
+settings.POOL_OF_RAMOS = {}
+
 try:
     from django.conf import settings
 except ImportError:
-    try:
+    with suppress(ImportError):
         from simple_settings import settings
-    except ImportError:
-        settings = threading.local()
-        settings.POOL_OF_RAMOS = {}
 
 
 def get_installed_pools():
