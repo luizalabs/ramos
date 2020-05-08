@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pytest
 
 from ramos.compat import configure, get_installed_pools, import_string

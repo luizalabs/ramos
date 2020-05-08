@@ -24,7 +24,7 @@ check-python-import:
 	@isort --check
 
 fix-python-import:
-	@git diff origin/master --name-only | grep py | xargs isort -ri
+	@isort -rc .
 
 outdated: ## Show outdated dependencies
 	@pip list --outdated --format=columns

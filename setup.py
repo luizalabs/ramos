@@ -25,11 +25,10 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
     extras_require={
-        'django': ['Django>=1.8'],
+        'django': ['Django>=2.2'],
         'simple_settings': ['simple_settings']
     }
 )

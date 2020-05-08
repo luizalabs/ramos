@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+from unittest.mock import Mock, patch
+
 import pytest
-from mock import Mock, patch
 
 from ramos.mixins import (
     DefaultBackendMixin,
