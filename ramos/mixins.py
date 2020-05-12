@@ -1,7 +1,7 @@
 from .compat import settings
 
 
-class ThreadSafeCreateMixin(object):
+class ThreadSafeCreateMixin:
     """
     ThreadSafeCreateMixin can be used as an inheritance
     of thread safe backend implementations
@@ -15,7 +15,7 @@ class ThreadSafeCreateMixin(object):
         return cls(*args, **kwargs)
 
 
-class SingletonCreateMixin(object):
+class SingletonCreateMixin:
     """
     SingletonCreateMixin can be used as an inheritance
     of singleton backend implementations
@@ -34,7 +34,7 @@ class SingletonCreateMixin(object):
         return cls._instances[cls]
 
 
-class DefaultBackendMixin(object):
+class DefaultBackendMixin:
     """
     Creates the method 'get_default' that will return the backend with the
     `SETTINGS_KEY` key value

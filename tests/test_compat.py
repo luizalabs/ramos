@@ -3,7 +3,7 @@ import pytest
 from ramos.compat import configure, get_installed_pools, import_string
 
 
-class TestImportString(object):
+class TestImportString:
 
     def test_should_raise_exception_when_path_has_no_dot(self):
         with pytest.raises(ImportError):

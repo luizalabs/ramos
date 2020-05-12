@@ -8,7 +8,7 @@ class InvalidBackendError(Exception):
         self.backend_type = backend_type
         self.backend_id = backend_id
         self.available_backends = available_backends
-        self.error_message = u'Invalid {} backend: {}'.format(
+        self.error_message = 'Invalid {} backend: {}'.format(
             self.backend_type, self.backend_id
         )
 

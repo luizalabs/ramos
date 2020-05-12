@@ -2,7 +2,7 @@ from .compat import ImproperlyConfigured, get_installed_pools, import_string
 from .exceptions import InvalidBackendError
 
 
-class BackendPool(object):
+class BackendPool:
     """
     BackendPool is an interface to get instances of backend types
     """
@@ -65,7 +65,7 @@ class BackendPool(object):
             backend_list = get_installed_pools()[cls.backend_type]
         except KeyError:
             raise ImproperlyConfigured(
-                u'Backend type "{}" config not found'.format(cls.backend_type)
+                'Backend type "{}" config not found'.format(cls.backend_type)
             )
 
         return (
