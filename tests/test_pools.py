@@ -33,11 +33,11 @@ class TestBackendPool(object):
     def test_get_backends_should_return_all_backends_classes(self):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeXYZBackend.__name__
                 ),
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
@@ -52,11 +52,11 @@ class TestBackendPool(object):
     def test_get_backend_should_return_a_backend_class(self):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeXYZBackend.__name__
                 ),
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
@@ -71,11 +71,11 @@ class TestBackendPool(object):
     ):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeXYZBackend.__name__
                 ),
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
@@ -96,11 +96,11 @@ class TestBackendPool(object):
     ):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeXYZBackend.__name__
                 ),
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
@@ -119,11 +119,11 @@ class TestBackendPool(object):
     def test_get_backends_should_return_all_backends_instances(self):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeXYZBackend.__name__
                 ),
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
@@ -151,11 +151,11 @@ class TestBackendPool(object):
     def test_get_should_return_the_backend_instance(self):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeXYZBackend.__name__
                 ),
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
@@ -169,11 +169,11 @@ class TestBackendPool(object):
     def test_get_with_nonexistent_backend_should_raise(self):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeXYZBackend.__name__
                 ),
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeABCBackend.__name__
                 ),
@@ -186,7 +186,7 @@ class TestBackendPool(object):
     def test_get_should_pass_args_to_the_backend_constructor(self):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeBackendWithConstructor.__name__
                 ),
@@ -207,7 +207,7 @@ class TestBackendPool(object):
     def test_all_should_pass_args_to_the_backend_constructor(self):
         configure(pools={
             BackendPool.backend_type: (
-                u'{module}.{cls}'.format(
+                '{module}.{cls}'.format(
                     module=__name__,
                     cls=FakeBackendWithConstructor.__name__
                 ),

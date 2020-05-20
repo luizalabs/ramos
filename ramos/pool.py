@@ -1,13 +1,14 @@
+import abc
+
 from .compat import ImproperlyConfigured, get_installed_pools, import_string
 from .exceptions import InvalidBackendError
 
 
-class BackendPool(object):
-    """
-    BackendPool is an interface to get instances of backend types
-    """
-
-    backend_type = None
+class AbstractPool(abc.ABC):
+    @classmethod
+    @abc.abstractmethod
+    def classes_iterator(cls):
+        ...
 
     @classmethod
     def get(cls, backend_id, *args, **kwargs):
@@ -56,6 +57,14 @@ class BackendPool(object):
             for backend_class in cls.classes_iterator()
         )
 
+
+class BackendPool(AbstractPool):
+    """
+    BackendPool is an interface to get instances of backend types
+    """
+
+    backend_type = None
+
     @classmethod
     def classes_iterator(cls):
         """
@@ -72,3 +81,51 @@ class BackendPool(object):
             import_string(backend_path)
             for backend_path in backend_list
         )
+
+
+class IndependentPool(AbstractPool):
+    """
+    The independent pool allows you to configure through the `backends`
+    property, without having to run ramos.configure() or install in your
+    settings (django.conf.settings or simple_settings).
+
+    Example:
+
+        caches
+          |___ pool.py
+          |___ backends
+            |____ file.py
+            |____ locmem.py
+            |____ redis.py
+
+        >>> from ramos.pool import IndendentPool
+        >>> from caches.backends.locmem import LocmemBackend
+
+        >>> class CachePool(IndependentPool):
+        >>>     backends = [
+        >>>         LocmemBackend,
+        >>>         'caches.backends.file.FileCacheBackend',
+        >>>         'caches.backends.redis.RedisCacheBackend',
+        >>>     ]
+
+        >>> CachePool.get('locmem')
+
+        OR
+
+        >>> CachePool.get('redis')
+
+        This always return backends instances
+    """
+
+    backends = []
+
+    @classmethod
+    def classes_iterator(cls):
+        """
+        Return an iterator with all classed of backends in this pool
+        """
+        for backend in cls.backends:
+            if isinstance(backend, str):
+                yield import_string(backend)
+            else:
+                yield backend
