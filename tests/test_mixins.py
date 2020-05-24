@@ -5,7 +5,7 @@ import pytest
 from ramos.mixins import (
     DefaultBackendMixin,
     SingletonCreateMixin,
-    ThreadSafeCreateMixin
+    ThreadSafeCreateMixin,
 )
 
 
@@ -18,7 +18,6 @@ class AnotherSingletonDerived(SingletonCreateMixin):
 
 
 class TestSingletonCreateMixin:
-
     def setup(self):
         SingletonCreateMixin._instances = {}
         AnotherSingletonDerived._instances = {}
@@ -29,7 +28,7 @@ class TestSingletonCreateMixin:
         assert SingletonDerived.create() is SingletonDerived.create()
 
     def test_singleton_instance_should_be_different_for_child_classes_defined_after_instance_creation(  # noqa
-        self
+        self,
     ):
         instance_base = SingletonCreateMixin.create()
 
@@ -41,7 +40,7 @@ class TestSingletonCreateMixin:
         assert instance_base is not instance_child
 
     def test_create_should_return_different_instances_for_different_classes(
-        self
+        self,
     ):
         assert (
             AnotherSingletonDerived.create() is not SingletonDerived.create()
@@ -49,7 +48,6 @@ class TestSingletonCreateMixin:
 
 
 class TestThreadSafeCreateMixin:
-
     def test_create_should_return_a_new_instance(self):
         instance_1 = ThreadSafeCreateMixin.create()
         instance_2 = ThreadSafeCreateMixin.create()
@@ -73,7 +71,6 @@ class TestThreadSafeCreateMixin:
 
 
 class TestDefaultBackendMixin:
-
     @pytest.fixture
     def backend_id(self):
         return 'my-backend-id'
@@ -103,9 +100,7 @@ class TestDefaultBackendMixin:
         assert invalid_key in str(exc.value)
 
     def test_should_call_get_with_correct_backend_id(
-        self,
-        mocked_settings,
-        backend_id
+        self, mocked_settings, backend_id
     ):
         mixin_class = DefaultBackendMixin
         mixin_class.SETTINGS_KEY = backend_id

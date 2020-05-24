@@ -36,7 +36,7 @@ class BackendPool:
         raise InvalidBackendError(
             cls.backend_type,
             backend_id,
-            get_installed_pools()[cls.backend_type]
+            get_installed_pools()[cls.backend_type],
         )
 
     @classmethod
@@ -68,7 +68,4 @@ class BackendPool:
                 'Backend type "{}" config not found'.format(cls.backend_type)
             )
 
-        return (
-            import_string(backend_path)
-            for backend_path in backend_list
-        )
+        return (import_string(backend_path) for backend_path in backend_list)

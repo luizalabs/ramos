@@ -28,33 +28,34 @@ class FakeBackendWithConstructor(ThreadSafeCreateMixin):
 class TestBackendPool:
     @pytest.fixture
     def configured_pool_with_fake_backend_with_constructor(self):
-        configure(pools={
-            BackendPool.backend_type: (
-                '{module}.{cls}'.format(
-                    module=__name__,
-                    cls=FakeBackendWithConstructor.__name__
-                ),
-            )
-        })
+        configure(
+            pools={
+                BackendPool.backend_type: (
+                    '{module}.{cls}'.format(
+                        module=__name__,
+                        cls=FakeBackendWithConstructor.__name__,
+                    ),
+                )
+            }
+        )
 
     @pytest.fixture
     def configured_pools(self):
-        configure(pools={
-            BackendPool.backend_type: (
-                '{module}.{cls}'.format(
-                    module=__name__,
-                    cls=FakeXYZBackend.__name__
-                ),
-                '{module}.{cls}'.format(
-                    module=__name__,
-                    cls=FakeABCBackend.__name__
-                ),
-            )
-        })
+        configure(
+            pools={
+                BackendPool.backend_type: (
+                    '{module}.{cls}'.format(
+                        module=__name__, cls=FakeXYZBackend.__name__
+                    ),
+                    '{module}.{cls}'.format(
+                        module=__name__, cls=FakeABCBackend.__name__
+                    ),
+                )
+            }
+        )
 
     def test_get_backends_should_return_all_backends_classes(
-        self,
-        configured_pools
+        self, configured_pools
     ):
         backends = BackendPool.all_classes()
 
@@ -90,8 +91,7 @@ class TestBackendPool:
         assert issubclass(backend_1, FakeABCBackend)
 
     def test_get_backends_should_return_all_backends_instances(
-        self,
-        configured_pools
+        self, configured_pools
     ):
         backends = BackendPool.all()
 
@@ -105,9 +105,7 @@ class TestBackendPool:
             BackendPool.all()
 
     def test_get_backends_with_zero_backends_should_return_empty_list(self):
-        configure(pools={
-            BackendPool.backend_type: {}
-        })
+        configure(pools={BackendPool.backend_type: {}})
 
         assert BackendPool.all() == []
 
@@ -121,23 +119,17 @@ class TestBackendPool:
             BackendPool.get('fake_fake')
 
     def test_get_should_pass_args_to_the_backend_constructor(
-        self,
-        configured_pool_with_fake_backend_with_constructor
+        self, configured_pool_with_fake_backend_with_constructor
     ):
         backend = BackendPool.get(
-            'fake_with_args',
-            'arg1',
-            'arg2',
-            arg3=3,
-            arg4=4
+            'fake_with_args', 'arg1', 'arg2', arg3=3, arg4=4
         )
 
         assert backend.args == ('arg1', 'arg2')
         assert backend.kwargs == {'arg3': 3, 'arg4': 4}
 
     def test_all_should_pass_args_to_the_backend_constructor(
-        self,
-        configured_pool_with_fake_backend_with_constructor
+        self, configured_pool_with_fake_backend_with_constructor
     ):
         backends = BackendPool.all('arg1', 'arg2', arg3=3, arg4=4)
         backend = backends[0]

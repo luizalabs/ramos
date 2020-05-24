@@ -39,14 +39,13 @@ class DefaultBackendMixin:
     Creates the method 'get_default' that will return the backend with the
     `SETTINGS_KEY` key value
     """
+
     SETTINGS_KEY = None
 
     @classmethod
     def get_default(cls):
         if cls.SETTINGS_KEY is None:
-            raise AttributeError(
-                'You must set a `SETTINGS_KEY` to the Pool.'
-            )
+            raise AttributeError('You must set a `SETTINGS_KEY` to the Pool.')
 
         try:
             backend_id = getattr(settings, cls.SETTINGS_KEY)

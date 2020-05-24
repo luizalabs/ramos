@@ -1,10 +1,6 @@
 import pytest
 
-POOL_OF_RAMOS = {
-    'backend_type': [
-        'path.to.backend'
-    ]
-}
+POOL_OF_RAMOS = {'backend_type': ['path.to.backend']}
 
 
 _SETTINGS = None
@@ -13,6 +9,7 @@ _SETTINGS = None
 @pytest.fixture(autouse=True)
 def reset_pools():
     import ramos
+
     ramos.configure(pools=POOL_OF_RAMOS)
 
 
@@ -57,4 +54,5 @@ def pytest_configure():
             _SETTINGS = settings
         except ImportError:
             import ramos
+
             ramos.configure(pools=POOL_OF_RAMOS)

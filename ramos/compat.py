@@ -25,6 +25,7 @@ def configure(pools):
 try:
     from django.core.exceptions import ImproperlyConfigured
 except ImportError:
+
     class ImproperlyConfigured(Exception):
         pass
 
@@ -44,9 +45,7 @@ except ImportError:
             module_path, class_name = dotted_path.rsplit('.', 1)
         except ValueError:
             raise ImportError(
-                "{} doesn't look like a module path".format(
-                    dotted_path
-                )
+                "{} doesn't look like a module path".format(dotted_path)
             )
 
         module = import_module(module_path)
@@ -56,7 +55,6 @@ except ImportError:
         except AttributeError:
             raise ImportError(
                 'Module "{}" does not define a "{}" attribute/class'.format(
-                    module_path,
-                    class_name
+                    module_path, class_name
                 )
             )
