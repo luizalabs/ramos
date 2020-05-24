@@ -1,6 +1,9 @@
 Ramos
 =====
 
+.. image:: https://readthedocs.org/projects/ramos/badge/?version=latest&style=flat
+    :target: https://ramos.readthedocs.io/en/latest/
+
 .. image:: https://travis-ci.org/luizalabs/ramos.svg?branch=master
     :target: https://travis-ci.org/luizalabs/ramos
 
