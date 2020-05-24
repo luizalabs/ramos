@@ -17,7 +17,7 @@ class AnotherSingletonDerived(SingletonCreateMixin):
     pass
 
 
-class TestSingletonCreateMixin(object):
+class TestSingletonCreateMixin:
 
     def setup(self):
         SingletonCreateMixin._instances = {}
@@ -48,7 +48,7 @@ class TestSingletonCreateMixin(object):
         )
 
 
-class TestThreadSafeCreateMixin(object):
+class TestThreadSafeCreateMixin:
 
     def test_create_should_return_a_new_instance(self):
         instance_1 = ThreadSafeCreateMixin.create()
@@ -72,7 +72,7 @@ class TestThreadSafeCreateMixin(object):
         assert instance.arg3 == 3
 
 
-class TestDefaultBackendMixin(object):
+class TestDefaultBackendMixin:
 
     @pytest.fixture
     def backend_id(self):
