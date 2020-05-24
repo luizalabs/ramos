@@ -13,18 +13,17 @@ help:  ## This help
 check:  ## Run static code checks
 	@flake8 .
 	@isort --check
+	@black --check .
+
+fix-code:  ## Fix some code style
+	@isort -rc .
+	@black .
 
 test:  ## Run unit tests
 	@py.test -x tests/
 
 coverage: ## Run unit tests coverage
 	@py.test -x --cov ramos/ --cov-report=xml --cov-report=term-missing tests/
-
-check-python-import:
-	@isort --check
-
-fix-python-import:
-	@isort -rc .
 
 outdated: ## Show outdated dependencies
 	@pip list --outdated --format=columns

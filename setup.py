@@ -12,9 +12,7 @@ def read(fname):
 setup(
     name='ramos',
     version='1.4.0',
-    description=(
-        'Generic backend pool '
-    ),
+    description=('Generic backend pool'),
     long_description=read('README.rst'),
     author='LuizaLabs',
     author_email='pypi@luizalabs.com',
@@ -29,6 +27,6 @@ setup(
     ],
     extras_require={
         'django': ['Django>=2.2'],
-        'simple_settings': ['simple_settings']
-    }
+        'simple_settings': ['simple_settings'],
+    },
 )
