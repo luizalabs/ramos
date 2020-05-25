@@ -28,7 +28,8 @@ after_success:
   - codecov
 
 script:
-  - make check coverage
+  - if [ $TRAVIS_PYTHON_VERSION != 3.5 ]; then make check; fi
+  - make coverage
 
 deploy:
   skip_existing: true
