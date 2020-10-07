@@ -2,7 +2,6 @@ os: linux
 dist: xenial
 language: python
 python:
-  - '3.5'
   - '3.6'
   - '3.7'
   - '3.8'
@@ -28,7 +27,7 @@ after_success:
   - codecov
 
 script:
-  - if [ $TRAVIS_PYTHON_VERSION != 3.5 ]; then make check; fi
+  - make check
   - make coverage
 
 deploy:
