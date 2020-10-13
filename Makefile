@@ -12,11 +12,11 @@ help:  ## This help
 
 check:  ## Run static code checks
 	@flake8 .
-	@isort --check
+	@isort . --check
 	@black --check .
 
 fix-code:  ## Fix some code style
-	@isort -rc .
+	@isort .
 	@black .
 
 test:  ## Run unit tests
