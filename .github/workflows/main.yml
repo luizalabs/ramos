@@ -1,0 +1,42 @@
+name: Python package
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+        dependency: ["django", "simplesettings", "none"]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        if [ ${{ matrix.dependency }} == django ]; then pip install Django>2.2; fi
+        if [ ${{ matrix.dependency }} == simplesettings ]; then pip install simple_settings; fi
+        pip install -r requirements-dev.txt
+        pip install codecov
+
+    - name: Run lint
+      run: |
+        make check
+
+    - name: Run tests
+      run: |
+        make coverage
+        codecov
+
+    - name: Publish a Python distribution to PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+      with:
+        user: ${{ secrets.pypi_user }}
+        password: ${{ secrets.pypi_password }}
