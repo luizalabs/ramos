@@ -33,7 +33,7 @@ assert backend is other  # True
 SingletonCreateMixin
 --------------------
 
-Then inherited class will return always the same instance of the backend in
+The inherited class will return always the same instance of the backend in
 every call of `create`.
 
 
