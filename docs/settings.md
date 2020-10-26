@@ -35,7 +35,7 @@ Django Settings
 ---------------
 
 If you are using [Django][https://www.djangoproject.com/], you can use a
-variable `POLL_OF_RAMOS` in your settings file instead of `ramos.configure`.
+variable `POOL_OF_RAMOS` in your settings file instead of `ramos.configure`.
 
 #### example
 ```python
@@ -53,4 +53,4 @@ Simple Settings
 ---------------
 
 **Ramos** also supports [Simple Settings](https://github.com/drgarcia1986/simple-settings)
-which can setup a `POLL_OF_RAMOS` variable, like Django's settings.
+which can setup a `POOL_OF_RAMOS` variable, like Django's settings.
