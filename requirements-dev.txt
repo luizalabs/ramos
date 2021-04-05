@@ -5,5 +5,5 @@ flake8==3.8.4
 isort==5.7.0
 mkdocs==1.1.2
 pytest-cov==2.11.1
-pytest==6.1.2
+pytest==6.2.3
 towncrier==19.2.0
