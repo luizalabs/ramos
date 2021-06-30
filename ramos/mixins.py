@@ -24,14 +24,23 @@ class SingletonCreateMixin:
     _instances = {}
 
     @classmethod
-    def create(cls):
+    def _get_instance_key(cls, *args, **kwargs):
+        class_path = f'{cls.__module__}.{cls.__qualname__}'
+        kwargs_tuple = tuple(sorted(kwargs.items()))
+
+        return f'{class_path}|{hash(args)}|{hash(kwargs_tuple)}'
+
+    @classmethod
+    def create(cls, *args, **kwargs):
         """
         Return always the same instance of the backend class
         """
-        if cls not in cls._instances:
-            cls._instances[cls] = cls()
+        key = cls._get_instance_key(*args, **kwargs)
 
-        return cls._instances[cls]
+        if key not in cls._instances:
+            cls._instances[key] = cls(*args, **kwargs)
+
+        return cls._instances[key]
 
 
 class DefaultBackendMixin:
