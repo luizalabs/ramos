@@ -36,6 +36,12 @@ SingletonCreateMixin
 The inherited class will return always the same instance of the backend in
 every call of `create`.
 
+**caveat**: When `SingletonCreateMixin` is used with args and kwargs,
+every backend of the same type should use it as well, so that the backend pool
+can create every backend instance using the exact same parameters. The args and kwargs
+will be concatenated with class path and qualifier name to generate a unique identifier
+to be used to find the instances previously created.
+
 
 ThreadSafeCreateMixin
 ---------------------

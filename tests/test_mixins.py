@@ -9,6 +9,13 @@ from ramos.mixins import (
 )
 
 
+class SingletonClass(SingletonCreateMixin):
+    def __init__(self, arg1, arg2, arg3):
+        self.arg1 = arg1
+        self.arg2 = arg2
+        self.arg3 = arg3
+
+
 class SingletonDerived(SingletonCreateMixin):
     pass
 
@@ -45,6 +52,31 @@ class TestSingletonCreateMixin:
         assert (
             AnotherSingletonDerived.create() is not SingletonDerived.create()
         )
+
+    def test_create_should_pass_args_to_create_a_new_singleton_instance(self):
+        instance = SingletonClass.create(1, 2, arg3=3)
+
+        assert instance.arg1 == 1
+        assert instance.arg2 == 2
+        assert instance.arg3 == 3
+
+    def test_create_should_return_same_instance_for_equal_args(self):
+        instance_a = SingletonClass.create(1, 2, arg3=3)
+        instance_b = SingletonClass.create(1, 2, arg3=3)
+
+        assert instance_a is instance_b
+
+    def test_create_should_return_new_instance_for_different_args(self):
+        instance_a = SingletonClass.create(1, 2, arg3=3)
+        instance_b = SingletonClass.create(2, 1, arg3=3)
+
+        assert instance_a is not instance_b
+
+    def test_create_should_return_same_instance_for_diff_kwargs_order(self):
+        instance_a = SingletonClass.create(1, arg2=2, arg3=3)
+        instance_b = SingletonClass.create(1, arg3=3, arg2=2)
+
+        assert instance_a is instance_b
 
 
 class TestThreadSafeCreateMixin:
