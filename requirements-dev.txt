@@ -2,7 +2,7 @@
 black==20.8b1
 bump2version==1.0.1
 flake8==3.8.4
-isort==5.7.0
+isort==5.9.3
 mkdocs==1.1.2
 pytest-cov==2.11.1
 pytest==6.1.2
