@@ -6,4 +6,4 @@ isort==5.10.1
 mkdocs==1.2.3
 pytest-cov==3.0.0
 pytest==6.2.5
-towncrier==21.3.0
+towncrier==22.12.0
